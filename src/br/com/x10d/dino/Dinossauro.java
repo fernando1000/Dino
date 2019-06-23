@@ -6,66 +6,63 @@ import java.awt.Graphics;
 public class Dinossauro {
 	
 	public static final Coordenada coordenadaGravidade = new Coordenada(0,1.2);
-	public static final double jumpVel = -16;
-	
 	private static final Coordenada coordenadaDinoEmPeh = new Coordenada(20, 40);
 	private static final Coordenada coordenadaDinoAbaixado = new Coordenada(35, 20);
-	
-	private Coordenada coordenadaPosicao, vel;
 	private Coordenada coordenadaAreaOcupadaAtualmente = coordenadaDinoEmPeh;
-	public boolean isPulando = false;
-	private boolean isEmbaixo = false;
-	
+	private Coordenada coordenadaPosicao, coordenadaVertical;
+	public static final double puloVertical = -16;
+	public boolean isDinoPulando = false;
+	private boolean isDinoAbaixado = false;
 	public int fitness;
-	
 	public RedeNeural redeNeural;
 	
 	public Dinossauro() {
 		this.coordenadaPosicao = new Coordenada();
-		this.vel = new Coordenada();
+		this.coordenadaVertical = new Coordenada();
 		redeNeural = new RedeNeural(6,4,2);
 		redeNeural.aplicaAtivacoes(new int[2]);			
 	}
 	
 	public Dinossauro(RedeNeural brain) {
 		this.coordenadaPosicao = new Coordenada();
-		this.vel = new Coordenada();
+		this.coordenadaVertical = new Coordenada();
 		this.redeNeural = brain;
 	}
 	
-	public void moveForward(Coordenada stVel, int timer) {
-		fitness = timer;
-		coordenadaPosicao.adiciona(stVel);	
+	public void moveForward(Coordenada coordenadaStVel, int tempoPontuacaoAtual) {
+		fitness = tempoPontuacaoAtual;
+		coordenadaPosicao.adiciona(coordenadaStVel);	
 	}
 	
-	public void tick(double distance, double speed, double yvel, double entityheight, double height, double isJumping) {
+	public void marca(double distancia, double velocidade, double dinoCoordenadaVertical, double alturaInimigo, double alturaDino, double isPulando) {
 		
-		double[] output = redeNeural.calculaSaidaDaRedeNeural(new double[] {distance/Main.WIDTH, speed/10, yvel/10, entityheight/Main.HEIGHT, height/Main.HEIGHT, isJumping});
-		if(output[0] > 0.5) jump();
-		if(output[1] > 0.5) dinoAbaixado();
+		double[] saidaResultadoNRA = redeNeural.calculaSaidaDaRedeNeural(new double[] {distancia/Main.WIDTH, velocidade/10, dinoCoordenadaVertical/10, alturaInimigo/Main.HEIGHT, alturaDino/Main.HEIGHT, isPulando});
+		if(saidaResultadoNRA[0] > 0.5) dinoPula();
+		if(saidaResultadoNRA[1] > 0.5) dinoAbaixa();
 		
-		coordenadaPosicao.adiciona(vel);
+		coordenadaPosicao.adiciona(coordenadaVertical);
 		
-		if(coordenadaPosicao.getY() < 0) vel.adiciona(coordenadaGravidade);
+		if(coordenadaPosicao.getY() < 0) coordenadaVertical.adiciona(coordenadaGravidade);
 		else {
 			coordenadaPosicao.setY(0);
-			if(vel.getY() > 0) vel.setY(0);
-			isPulando = false;
-			isEmbaixo = false;
+			if(coordenadaVertical.getY() > 0) coordenadaVertical.setY(0);
+			isDinoPulando = false;
+			isDinoAbaixado = false;
 		}
 	}
 	
-	public void jump() {
-		if(isPulando) return;
-		isPulando = true;
-		vel.setY(jumpVel);
+	public void dinoPula() {
+		
+		if(isDinoPulando) return;
+		isDinoPulando = true;
+		coordenadaVertical.setY(puloVertical);
 	}
 	
-	public void dinoAbaixado() {
+	public void dinoAbaixa() {
 		
-		if(coordenadaPosicao.getY() != 0 && !isEmbaixo) {
-			if(!isEmbaixo) vel.adiciona(new Coordenada(0, 1));
-			isEmbaixo = true;	
+		if(coordenadaPosicao.getY() != 0 && !isDinoAbaixado) {
+			if(!isDinoAbaixado) coordenadaVertical.adiciona(new Coordenada(0, 1));
+			isDinoAbaixado = true;	
 		}
 		coordenadaAreaOcupadaAtualmente = coordenadaDinoAbaixado;
 	}
@@ -84,8 +81,8 @@ public class Dinossauro {
 		return coordenadaPosicao;
 	}
 	
-	public Coordenada getVel() {
-		return vel;
+	public Coordenada getCoordenadaVertical() {
+		return coordenadaVertical;
 	}
 	
 	public Coordenada getCoordenadaAreaOcupada() {

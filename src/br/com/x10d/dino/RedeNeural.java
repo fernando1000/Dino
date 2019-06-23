@@ -81,16 +81,17 @@ public class RedeNeural implements Cloneable {
 		
 	public double[] calculaSaidaDaRedeNeural(double[] entrada) {
 		
-		double[][] z = new double[neuronios.length-1][];
+		double[][] qtdNeuronios = new double[neuronios.length-1][];
 		
 		this.neuronios[0] = entrada;
 		
-		for(int i = 0; i < z.length; i++) {
+		for(int i = 0; i < qtdNeuronios.length; i++) {
 			
-			z[i] = adiciona(bias[i],matrixVecMult(neuronios[i], pesos[i]));
-			neuronios[i+1] = funcaoAtivacao(z[i],funcaoDeAtivacao[i]);
+			qtdNeuronios[i] = adiciona(bias[i],matrix(neuronios[i], pesos[i]));
+			
+			neuronios[i+1] = funcaoAtivacao(qtdNeuronios[i],funcaoDeAtivacao[i]);
 		}
-		return neuronios[z.length];
+		return neuronios[qtdNeuronios.length];
 	}
 	
 	private double[] adiciona(double a[], double[] b) {
@@ -100,15 +101,18 @@ public class RedeNeural implements Cloneable {
 		return result;
 	}
 
-	private double[] matrixVecMult(double[] a, double[][] w) {
+	private double[] matrix(double[] neuronios, double[][] pesos) {
 		
-		double[] result = new double[w.length];
-		for (int i = 0; i < result.length; i++) {
-			for (int j = 0; j < a.length; j++) {
-				result[i] += a[j] * w[i][j];
+		double[] tamanhoPesos = new double[pesos.length];
+		
+		for (int i = 0; i < tamanhoPesos.length; i++) {
+			
+			for (int j = 0; j < neuronios.length; j++) {
+				
+				tamanhoPesos[i] += neuronios[j] * pesos[i][j];
 			}
 		}
-		return result;
+		return tamanhoPesos;
 	}
 	
 	private double[] funcaoAtivacao(double[] layer, FuncaoDeAtivacao funcaoDeAtivacao) {

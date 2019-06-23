@@ -45,20 +45,20 @@ public class Jogo {
 			dinossauro.moveForward(coordenadasStVel, tempoPontuacaoAtual);
 			
 			double distancia = 0;
-			double altura = 0;
+			double alturaInimigo = 0;
 			
 			for(Inimigo inimigo : listaComInimigos) {
 				
 				if(inimigo.getPosicao().getX() > dinossauro.getPosicao().getX()) {
 					
 					distancia = inimigo.getPosicao().x - dinossauro.getPosicao().x;
-					altura = inimigo.getPosicao().y;
+					alturaInimigo = inimigo.getPosicao().y;
 					break;
 				}
 			}
 			double velocidade = coordenadasStVel.x;
 			
-			dinossauro.tick(distancia, velocidade, dinossauro.getVel().y, -altura, -dinossauro.getPosicao().y, dinossauro.isPulando ? 1:0);
+			dinossauro.marca(distancia, velocidade, dinossauro.getCoordenadaVertical().y, -alturaInimigo, -dinossauro.getPosicao().y, dinossauro.isDinoPulando ? 1:0);
 		}
 		
 		for(Inimigo inimigo : listaComInimigos) {

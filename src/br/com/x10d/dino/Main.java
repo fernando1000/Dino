@@ -16,7 +16,7 @@ import javax.swing.JTextField;
 
 public class Main extends Canvas {
 	
-	public static final int WIDTH = 800, HEIGHT  = 600;
+	public static final int WIDTH = 800, HEIGHT  = 500;
 	
 	public Jogo jogo;
 	public KeyHandler keyHandler;

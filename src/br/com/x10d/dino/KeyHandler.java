@@ -13,8 +13,8 @@ public class KeyHandler implements KeyListener {
 	}
 	
 	public void keyPressed(KeyEvent keyEvent) {
-		if(keyEvent.getKeyCode() == KeyEvent.VK_SPACE || keyEvent.getKeyCode() == KeyEvent.VK_UP) main.jogo.listaComPopulacaoDeDinossauros.get(0).jump();
-		if(keyEvent.getKeyCode() == KeyEvent.VK_DOWN) main.jogo.listaComPopulacaoDeDinossauros.get(0).dinoAbaixado(); 
+		if(keyEvent.getKeyCode() == KeyEvent.VK_SPACE || keyEvent.getKeyCode() == KeyEvent.VK_UP) main.jogo.listaComPopulacaoDeDinossauros.get(0).dinoPula();
+		if(keyEvent.getKeyCode() == KeyEvent.VK_DOWN) main.jogo.listaComPopulacaoDeDinossauros.get(0).dinoAbaixa(); 
 	}
 
 	public void keyReleased(KeyEvent e) {

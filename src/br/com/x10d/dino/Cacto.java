@@ -1,7 +1,9 @@
 package br.com.x10d.dino;
 
-import java.awt.Color;
 import java.awt.Graphics;
+import java.net.URL;
+
+import javax.swing.ImageIcon;
 
 public class Cacto extends Inimigo {
 	
@@ -19,8 +21,11 @@ public class Cacto extends Inimigo {
 	@Override
 	public void renderiza(Graphics graphics, Coordenada offset) {
 		
-		graphics.setColor(Color.GREEN);
-		graphics.fillRect(getXDaTela(offset), getYDaTela(offset), largura, altura);
+		URL resource = getClass().getResource("/imagens/cacto.png");
+		ImageIcon img = new ImageIcon(resource);
+		graphics.drawImage(img.getImage(), getXDaTela(offset), getYDaTela(offset), largura, altura, null);
+		//graphics.setColor(Color.GREEN);
+		//graphics.fillRect(getXDaTela(offset), getYDaTela(offset), largura, altura);
 	}
 
 	@Override

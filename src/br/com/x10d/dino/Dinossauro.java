@@ -2,6 +2,9 @@ package br.com.x10d.dino;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.net.URL;
+
+import javax.swing.ImageIcon;
 
 public class Dinossauro {
 	
@@ -73,8 +76,20 @@ public class Dinossauro {
 	
 	public void renderiza(Graphics graphics, Coordenada offset) {
 		
-		graphics.setColor(Color.CYAN);
-		graphics.fillRect(coordenadaPosicao.getX()-offset.getX()+Main.WIDTH/2, coordenadaPosicao.getY()-offset.getY()+Main.HEIGHT/2-coordenadaAreaOcupadaAtualmente.getY(), coordenadaAreaOcupadaAtualmente.getX(), coordenadaAreaOcupadaAtualmente.getY());
+		URL resource = getClass().getResource("/imagens/dinossauro.png");
+		ImageIcon img = new ImageIcon(resource);
+		graphics.drawImage(img.getImage(), 
+						   coordenadaPosicao.getX()-offset.getX()+Main.WIDTH/2, 
+						   coordenadaPosicao.getY()-offset.getY()+Main.HEIGHT/2-coordenadaAreaOcupadaAtualmente.getY(), 
+						   coordenadaAreaOcupadaAtualmente.getX(), 
+						   coordenadaAreaOcupadaAtualmente.getY(), 
+						   null);
+
+		//graphics.setColor(Color.CYAN);
+		//graphics.fillRect(coordenadaPosicao.getX()-offset.getX()+Main.WIDTH/2, 
+						  //coordenadaPosicao.getY()-offset.getY()+Main.HEIGHT/2-coordenadaAreaOcupadaAtualmente.getY(), 
+						  //coordenadaAreaOcupadaAtualmente.getX(), 
+						  //coordenadaAreaOcupadaAtualmente.getY());
 	}
 	
 	public Coordenada getPosicao() {

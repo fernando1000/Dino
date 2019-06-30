@@ -1,6 +1,5 @@
 package br.com.x10d.dino;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.net.URL;
 
@@ -9,17 +8,18 @@ import javax.swing.ImageIcon;
 public class Dinossauro {
 	
 	public static final Coordenada coordenadaGravidade = new Coordenada(0,1.2);
-	private static final Coordenada coordenadaDinoEmPeh = new Coordenada(20, 40);
-	private static final Coordenada coordenadaDinoAbaixado = new Coordenada(35, 20);
+	private static final Coordenada coordenadaDinoEmPeh = new Coordenada(40, 80);
+	private static final Coordenada coordenadaDinoAbaixado = new Coordenada(70, 40);
 	private Coordenada coordenadaAreaOcupadaAtualmente = coordenadaDinoEmPeh;
 	private Coordenada coordenadaPosicao, coordenadaVertical;
-	public static final double puloVertical = -16;
+	public static final double puloVertical = -20;//estava -16
 	public boolean isDinoPulando = false;
 	private boolean isDinoAbaixado = false;
 	public int fitness;
 	public RedeNeural redeNeural;
 	
 	public Dinossauro() {
+		
 		this.coordenadaPosicao = new Coordenada();
 		this.coordenadaVertical = new Coordenada();
 		redeNeural = new RedeNeural(6,4,2);
@@ -37,18 +37,35 @@ public class Dinossauro {
 		coordenadaPosicao.adiciona(coordenadaStVel);	
 	}
 	
-	public void marca(double distancia, double velocidade, double dinoCoordenadaVertical, double alturaInimigo, double alturaDino, double isPulando) {
+	public void processaEntradas(double distancia, double velocidade, double dinoCoordenadaVertical, double alturaInimigo, double alturaDino, double isPulando) {
 		
-		double[] saidaResultadoNRA = redeNeural.calculaSaidaDaRedeNeural(new double[] {distancia/Main.WIDTH, velocidade/10, dinoCoordenadaVertical/10, alturaInimigo/Main.HEIGHT, alturaDino/Main.HEIGHT, isPulando});
-		if(saidaResultadoNRA[0] > 0.5) dinoPula();
-		if(saidaResultadoNRA[1] > 0.5) dinoAbaixa();
+		double[] saidaResultadoNRA = redeNeural.calculaSaidaDaRedeNeural(new double[] {distancia/Main.WIDTH, 
+																					   velocidade/10, 
+																					   dinoCoordenadaVertical/10, 
+																					   alturaInimigo/Main.HEIGHT, 
+																					   alturaDino/Main.HEIGHT, 
+																					   isPulando});
+		
+		if(saidaResultadoNRA[0] > 0.5) { 
+			//somDoJogo.tocaAudio("/sons/pulo.wav");
+			dinoPula();
+		}
+		
+		if(saidaResultadoNRA[1] > 0.5) {
+			dinoAbaixa();
+		}
 		
 		coordenadaPosicao.adiciona(coordenadaVertical);
 		
-		if(coordenadaPosicao.getY() < 0) coordenadaVertical.adiciona(coordenadaGravidade);
-		else {
+		if(coordenadaPosicao.getY() < 0) {
+			coordenadaVertical.adiciona(coordenadaGravidade);
+		} else {
 			coordenadaPosicao.setY(0);
-			if(coordenadaVertical.getY() > 0) coordenadaVertical.setY(0);
+			
+			if(coordenadaVertical.getY() > 0) {
+				coordenadaVertical.setY(0);
+			}
+			
 			isDinoPulando = false;
 			isDinoAbaixado = false;
 		}
@@ -74,13 +91,13 @@ public class Dinossauro {
 		coordenadaAreaOcupadaAtualmente = coordenadaDinoEmPeh;
 	}
 	
-	public void renderiza(Graphics graphics, Coordenada offset) {
+	public void renderiza(Graphics graphics, Coordenada coordenadaDiferenca) {
 		
 		URL resource = getClass().getResource("/imagens/dinossauro.png");
 		ImageIcon img = new ImageIcon(resource);
 		graphics.drawImage(img.getImage(), 
-						   coordenadaPosicao.getX()-offset.getX()+Main.WIDTH/2, 
-						   coordenadaPosicao.getY()-offset.getY()+Main.HEIGHT/2-coordenadaAreaOcupadaAtualmente.getY(), 
+						   coordenadaPosicao.getX()-coordenadaDiferenca.getX()+Main.WIDTH/2, 
+						   coordenadaPosicao.getY()-coordenadaDiferenca.getY()+Main.HEIGHT/2-coordenadaAreaOcupadaAtualmente.getY(), 
 						   coordenadaAreaOcupadaAtualmente.getX(), 
 						   coordenadaAreaOcupadaAtualmente.getY(), 
 						   null);

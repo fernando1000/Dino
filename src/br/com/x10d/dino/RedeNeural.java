@@ -79,11 +79,11 @@ public class RedeNeural implements Cloneable {
 //		Arrays.stream(l).forEach(i -> System.out.print(i+"×"));
 	}
 		
-	public double[] calculaSaidaDaRedeNeural(double[] entrada) {
+	public double[] calculaSaidaDaRedeNeural(double[] entradas) {
 		
 		double[][] qtdNeuronios = new double[neuronios.length-1][];
 		
-		this.neuronios[0] = entrada;
+		this.neuronios[0] = entradas;
 		
 		for(int i = 0; i < qtdNeuronios.length; i++) {
 			

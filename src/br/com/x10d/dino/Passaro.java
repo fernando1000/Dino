@@ -1,27 +1,32 @@
 package br.com.x10d.dino;
 
-import java.awt.Color;
 import java.awt.Graphics;
+import java.net.URL;
+
+import javax.swing.ImageIcon;
 
 public class Passaro extends Inimigo {
 	
-	private Coordenada vel = new Coordenada(1.1, 0);
+	private Coordenada coordenadaVelocidade = new Coordenada(1.1, 0);
 	
 	public Passaro(Coordenada pos) {
-		this.largura = 15;
-		this.altura = 15;
+		this.largura = 30;
+		this.altura = 30;
 		this.coordenadasPosicao = pos; 
 	}
 	
 	@Override
 	public void marca() {
-		coordenadasPosicao.adiciona(vel);
+		coordenadasPosicao.adiciona(coordenadaVelocidade);
 	}
 	
 	@Override
 	public void renderiza(Graphics graphics, Coordenada coordenadaDiferenca) {
 		
-		graphics.setColor(Color.RED);
-		graphics.fillRect(getXDaTela(coordenadaDiferenca), getYDaTela(coordenadaDiferenca), largura, altura);
+		URL resource = getClass().getResource("/imagens/aguia.png");
+		ImageIcon img = new ImageIcon(resource);
+		graphics.drawImage(img.getImage(), getXDaTela(coordenadaDiferenca), getYDaTela(coordenadaDiferenca), largura, altura, null);
+		//graphics.setColor(Color.RED);
+		//graphics.fillRect(getXDaTela(coordenadaDiferenca), getYDaTela(coordenadaDiferenca), largura, altura);
 	}
 }

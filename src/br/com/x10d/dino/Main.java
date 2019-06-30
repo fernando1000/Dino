@@ -16,7 +16,7 @@ import javax.swing.JTextField;
 
 public class Main extends Canvas {
 	
-	public static final int WIDTH = 800, HEIGHT  = 500;
+	public static final int WIDTH = 800, HEIGHT  = 700;
 	
 	public Jogo jogo;
 	public KeyHandler keyHandler;
@@ -100,7 +100,7 @@ public class Main extends Canvas {
 		
 		long agoraEmMillisegundos = System.currentTimeMillis();
 		
-		int ticks = 0, frames = 0;
+		//int ticks = 0, frames = 0;
 		
 		while(true) {
 			
@@ -109,19 +109,19 @@ public class Main extends Canvas {
 			ultimoAgoraEmNanoSegundos = agoraEmNanoSegundos;
 			
 			while(delta >= 1) {
-				ticks++;
-				jogo.marca();
+				//ticks++;
+				jogo.registraOcorrencias();
 				delta--;
 			}
 			
 			renderizaImagens();
-			frames++;
+			//frames++;
 			
 			if(System.currentTimeMillis() - agoraEmMillisegundos >= 1000) {
 				agoraEmMillisegundos += 1000;
-				System.out.println("UPS: " + ticks + " FPS: " + frames);
-				frames = 0;
-				ticks = 0;
+				//System.out.println("UPS: " + ticks + " FPS: " + frames);
+				//frames = 0;
+				//ticks = 0;
 			}
 		}
 	}
@@ -137,7 +137,7 @@ public class Main extends Canvas {
 		Graphics graphicsTela = bufferStrategy.getDrawGraphics();
 		
 		graphicsTela.drawImage(bufferedImage, 0, 0, null);
-		jogo.renderizaDesenhos(graphicsTela);
+		jogo.renderizaObjetos(graphicsTela);
 		graphicsTela.dispose();
 		bufferStrategy.show();
 	}

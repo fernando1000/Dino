@@ -15,34 +15,37 @@ public class Jogo {
 	
 	private Random random = new Random();
 	
-	private Coordenada coordenadasOffSet;
-	private static Coordenada coordenadasStVel = new Coordenada(5, 0);
+	private Coordenada coordenadasDiferenca;
+	private static Coordenada coordenadasVelocidade = new Coordenada(5, 0);
 	
 	private int melhorFitness = 0; 
 	private int geracaoAtual = 1;
 	protected boolean isMelhorDino = false;
 	private static final int QUANTIDADE_POPULACAO = 1000;
+	private SomDoJogo somDoJogo;
 	
 	public Jogo() {
+		
+		somDoJogo = new SomDoJogo();
 		
 		for(int i = 0; i < QUANTIDADE_POPULACAO; i++) {
 			listaComPopulacaoDeDinossauros.add(new Dinossauro());			
 		}
 		
-		coordenadasOffSet = new Coordenada(listaComPopulacaoDeDinossauros.get(0).getPosicao().getX(), 0);
+		coordenadasDiferenca = new Coordenada(listaComPopulacaoDeDinossauros.get(0).getPosicao().getX(), 0);
 	}
 	
 	int tempoInimigo = 0;
 	int tempoPontuacaoAtual = 0;
 	
-	public void marca() {
+	public void registraOcorrencias() {
 		
 		if(listaComPopulacaoDeDinossauros.size()==0) repopular();
 		tempoInimigo++;
 		
 		for(Dinossauro dinossauro : listaComPopulacaoDeDinossauros) {
 			
-			dinossauro.moveForward(coordenadasStVel, tempoPontuacaoAtual);
+			dinossauro.moveForward(coordenadasVelocidade, tempoPontuacaoAtual);
 			
 			double distancia = 0;
 			double alturaInimigo = 0;
@@ -56,18 +59,23 @@ public class Jogo {
 					break;
 				}
 			}
-			double velocidade = coordenadasStVel.x;
+			double velocidade = coordenadasVelocidade.x;
 			
-			dinossauro.marca(distancia, velocidade, dinossauro.getCoordenadaVertical().y, -alturaInimigo, -dinossauro.getPosicao().y, dinossauro.isDinoPulando ? 1:0);
+			dinossauro.processaEntradas(distancia, 
+										velocidade, 
+										dinossauro.getCoordenadaVertical().y, 
+										-alturaInimigo, 
+										-dinossauro.getPosicao().y, 
+										dinossauro.isDinoPulando?1:0);
 		}
 		
 		for(Inimigo inimigo : listaComInimigos) {
 			inimigo.marca();
 		}
 		
-		tempoPontuacaoAtual += coordenadasStVel.getX();
+		tempoPontuacaoAtual += coordenadasVelocidade.getX();
 		
-		if(tempoPontuacaoAtual % 1000 == 0) coordenadasStVel.adiciona(new Coordenada(1,0));
+		if(tempoPontuacaoAtual % 1000 == 0) coordenadasVelocidade.adiciona(new Coordenada(1,0));
 		
 		verificaColisao();
 		
@@ -75,7 +83,7 @@ public class Jogo {
 		
 		adicionaCactosOuPassaros();
 		
-		atualizaOffset();
+		atualizaDiferencas();
 	}
 	
 	public void verificaColisao() {
@@ -85,9 +93,13 @@ public class Jogo {
 		while(dinossauroIterator.hasNext()) {
 			
 			Dinossauro dinossauro = dinossauroIterator.next();
-			for(Inimigo entidade : listaComInimigos) {
+			for(Inimigo inimigo : listaComInimigos) {
 				
-				if(houveColisao(dinossauro, entidade)) {
+				if(houveColisao(dinossauro, inimigo)) {
+					
+					if(listaComPopulacaoDeDinossauros.size() == 1) {
+						somDoJogo.tocaAudio("/sons/colisao.wav");
+					}
 					
 					listaComProximaPopulacaoDeDinossauros.add(dinossauro);
 					dinossauroIterator.remove();
@@ -104,14 +116,16 @@ public class Jogo {
 		while(inimigoIterator.hasNext()) {
 			
 			Inimigo inimigo = inimigoIterator.next();
-			if(inimigo.getXDaTela(coordenadasOffSet) < -inimigo.largura) inimigoIterator.remove();
+			if(inimigo.getXDaTela(coordenadasDiferenca) < -inimigo.largura) {
+				inimigoIterator.remove();
+			}
 		}
 	}
 	
-	public void atualizaOffset() {
-		
-		if(listaComPopulacaoDeDinossauros.size() > 0)
-			coordenadasOffSet = new Coordenada(listaComPopulacaoDeDinossauros.get(0).getPosicao().getX(), 0);
+	public void atualizaDiferencas() {
+		if(listaComPopulacaoDeDinossauros.size() > 0) {
+			coordenadasDiferenca = new Coordenada(listaComPopulacaoDeDinossauros.get(0).getPosicao().getX(), 0);
+		}
 	}
 	
 	private double rangeDePassaros = 0.2;
@@ -156,7 +170,7 @@ public class Jogo {
 		}
 		
 		listaComInimigos.clear();
-		coordenadasStVel.set(5, 0);
+		coordenadasVelocidade.set(5, 0);
 		listaComProximaPopulacaoDeDinossauros.clear();
 		tempoPontuacaoAtual = 0;
 		tempoInimigo = 0;
@@ -164,6 +178,8 @@ public class Jogo {
 	
 	private void adicionaPassaro() {
 		
+		somDoJogo.tocaAudio("/sons/Passaro.wav");
+
 		int alturaPassaro = random.nextInt(3);
 		
 		switch (alturaPassaro) {
@@ -200,7 +216,7 @@ public class Jogo {
 		}
 	}
 	
-	public void renderizaDesenhos(Graphics graphicsTela) {
+	public void renderizaObjetos(Graphics graphicsTela) {
 		
 		graphicsTela.setColor(Color.LIGHT_GRAY);
 		graphicsTela.fillRect(0, 0, Main.WIDTH, Main.HEIGHT);
@@ -208,14 +224,14 @@ public class Jogo {
 		graphicsTela.drawLine(0, Main.HEIGHT/2, Main.WIDTH, Main.HEIGHT/2);
 		
 		for(Inimigo inimigo : listaComInimigos) {
-			inimigo.renderiza(graphicsTela, coordenadasOffSet);
+			inimigo.renderiza(graphicsTela, coordenadasDiferenca);
 		}
 		
 		if(!isMelhorDino)
 		for(Dinossauro dinossauro : listaComPopulacaoDeDinossauros) {
-			dinossauro.renderiza(graphicsTela, coordenadasOffSet);
+			dinossauro.renderiza(graphicsTela, coordenadasDiferenca);
 		}
-		else if(listaComPopulacaoDeDinossauros.size()>0)listaComPopulacaoDeDinossauros.get(0).renderiza(graphicsTela, coordenadasOffSet);
+		else if(listaComPopulacaoDeDinossauros.size()>0)listaComPopulacaoDeDinossauros.get(0).renderiza(graphicsTela, coordenadasDiferenca);
 		graphicsTela.setColor(Color.DARK_GRAY);
 		graphicsTela.drawString("Melhor pontuacao: " + melhorFitness, 600, 100);
 		graphicsTela.drawString("Dinossauros restantes: " + listaComPopulacaoDeDinossauros.size(), 600, 120);

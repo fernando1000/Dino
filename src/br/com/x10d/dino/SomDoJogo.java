@@ -14,14 +14,16 @@ public class SomDoJogo {
 		//new Player().tocaAudio("/sons/colisao.wav");
 	}
 
-	public void tocaAudio(String nomeDoAudio) {
+	public Clip tocaAudio(String nomeDoAudio) {
 
 		URL url = getClass().getResource(nomeDoAudio);
+		Clip clip = null;
 		try {
 			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
-			Clip clip = AudioSystem.getClip();
-			     clip.open(audioInputStream);
-			     clip.start();
+			clip = AudioSystem.getClip();
+			clip.open(audioInputStream);
+			clip.start();
+			     
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -29,5 +31,6 @@ public class SomDoJogo {
 		 * SwingUtilities.invokeLater(new Runnable() { public void run() {
 		 * JOptionPane.showMessageDialog(null, "Clique pra fechar!"); } });
 		 */
+		return clip;
 	}
 }

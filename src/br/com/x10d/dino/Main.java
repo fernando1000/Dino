@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
+import javax.sound.sampled.Clip;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -91,6 +92,10 @@ public class Main extends Canvas {
 	}
 	
 	public void run() {
+		
+		Clip clip = new SomDoJogo().tocaAudio("/sons/jungle_run.wav");
+			 clip.loop(Clip.LOOP_CONTINUOUSLY);
+	     
 		
 		iniciaJogoEHandler();
 		

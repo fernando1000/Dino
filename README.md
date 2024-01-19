@@ -1,0 +1,1 @@
+Este projeto simula o cerebro de um dinossauro aprendendo a pular sobre os obstaculos, para relizar essa tarefa foi utilizado um algoritmo de aprendizado de maquina em conjunto com uma rede neural de camada simples.

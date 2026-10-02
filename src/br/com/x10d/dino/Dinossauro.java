@@ -93,7 +93,7 @@ public class Dinossauro {
 	
 	public void renderiza(Graphics graphics, Coordenada coordenadaDiferenca) {
 		
-		URL resource = getClass().getResource("/imagens/dinossauro.png");
+		URL resource = getClass().getResource("/imagens/Dinossauro.png");
 		ImageIcon img = new ImageIcon(resource);
 		graphics.drawImage(img.getImage(), 
 						   coordenadaPosicao.getX()-coordenadaDiferenca.getX()+Main.WIDTH/2, 

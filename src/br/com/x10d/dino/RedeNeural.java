@@ -76,7 +76,6 @@ public class RedeNeural implements Cloneable {
 		for(int j = 0; j < bias.length; j++) {
 			bias[j] = new double[l[j+1]];
 		}
-//		Arrays.stream(l).forEach(i -> System.out.print(i+"×"));
 	}
 		
 	public double[] calculaSaidaDaRedeNeural(double[] entradas) {

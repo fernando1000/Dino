@@ -1,7 +1,7 @@
 # Dino
 
 <p align="center">
-  <img src="arquivos/imagens/Dino.gif" alt="Demonstração do jogo Dino" width="900" />
+  <img src="arquivos/imagens/Dino.gif" alt="Dino game demo" width="900" />
 </p>
 
 <div align="center">
@@ -12,62 +12,62 @@
 </div>
 
 <p align="center">
-  <strong>Um jogo em Java inspirado no dinossauro do Chrome, com dinossauros controlados por uma rede neural que tenta aprender a sobreviver.</strong>
+  <strong>A Java game inspired by the Chrome dinosaur, where dinosaurs are controlled by a neural network that learns to survive.</strong>
 </p>
 
 ---
 
-## ✨ Visão geral
+## ✨ Overview
 
-Este projeto mistura duas coisas muito legais:
+This project combines two engaging ideas:
 
-- um jogo de obstáculos com mecânica simples e dinâmica;
-- uma rede neural criada do zero em Java para tomar decisões dos dinossauros;
-- tudo em um ambiente visual minimalista, divertido e fácil de executar.
+- an obstacle-based game with simple but dynamic mechanics;
+- a neural network built from scratch in Java to make decisions for the dinosaurs;
+- a minimalist, fun, and easy-to-run environment.
 
-O objetivo é observar os dinossauros tentarem evitar obstáculos e melhorar seu desempenho ao longo do tempo, como se estivessem "aprendendo" a jogar.
-
----
-
-## 🧠 Como funciona
-
-A estrutura do projeto é simples e direta:
-
-1. O jogo gera obstáculos aleatórios;
-2. Cada dinossauro recebe informações do ambiente;
-3. A rede neural calcula a melhor ação;
-4. O dinossauro pula ou continua conforme a decisão;
-5. A pontuação cresce conforme ele sobrevive mais tempo.
-
-Esse comportamento cria uma experiência interessante de simulação e aprendizado, com uma proposta muito visual e didática.
+The goal is to observe the dinosaurs trying to avoid obstacles and improve their performance over time, as if they were learning how to play.
 
 ---
 
-## 🎮 Destaques
+## 🧠 How it works
 
-- Jogo em Java puro, sem bibliotecas externas para IA;
-- Dinossauros controlados por rede neural;
-- Obstáculos em sequência com aumento gradual de desafio;
-- Sistema de pontuação e sobrevivência;
-- Visual retrô e estilo simples, porém marcante;
-- Código organizado em classes Java para facilitar estudo e evolução.
+The project is built around a straightforward flow:
+
+1. The game generates random obstacles;
+2. Each dinosaur receives information from its environment;
+3. The neural network decides the best action;
+4. The dinosaur jumps or continues depending on that decision;
+5. The score increases as it survives longer.
+
+This creates an interesting simulation of learning and adaptation, with a practical and visual approach to artificial intelligence.
 
 ---
 
-## 🚀 Como executar
+## 🎮 Key highlights
 
-Você precisa apenas do **JDK 8 ou superior** instalado.
+- Pure Java game, without external AI libraries;
+- Dinosaurs controlled by a neural network;
+- Obstacle sequences with a gradual increase in difficulty;
+- Score and survival tracking;
+- Retro visual style with a distinctive minimalist look;
+- Java classes organized to support learning and future improvements.
 
-### 1. Clone o projeto
+---
+
+## 🚀 How to run
+
+You only need the **JDK 8 or higher** installed on your system.
+
+### 1. Clone the project
 
 ```bash
 git clone https://github.com/fernando1000/Dino.git
 cd Dino
 ```
 
-Ou baixe o repositório em ZIP e extraia os arquivos.
+Alternatively, download the repository as a ZIP file and extract it.
 
-### 2. Inicie o jogo
+### 2. Start the game
 
 #### Windows
 
@@ -75,57 +75,57 @@ Ou baixe o repositório em ZIP e extraia os arquivos.
 .\executar.bat
 ```
 
-#### macOS e Linux
+#### macOS and Linux
 
 ```bash
 sh executar.sh
 ```
 
-O script compila o código e abre o jogo. Na primeira execução, a compilação pode levar alguns segundos.
+The script compiles the source code and launches the game. On the first run, compilation may take a few seconds.
 
-> Caso apareça a mensagem `javac not found`, verifique se o JDK está corretamente instalado e adicionado ao `PATH`.
+> If you see the message `javac not found`, make sure the JDK is correctly installed and added to your `PATH`.
 
 ---
 
-## 📁 Estrutura do projeto
+## 📁 Project structure
 
 ```text
 Dino/
-├── src/                 # Código-fonte Java
-├── arquivos/            # Recursos gráficos e sonoros
-├── build/               # Arquivos compilados
-├── executar.bat         # Script para Windows
-├── executar.sh          # Script para macOS/Linux
-├── README.md            # Documentação do projeto
+├── src/                 # Java source code
+├── arquivos/            # Graphics and sound resources
+├── build/               # Compiled files
+├── executar.bat         # Windows launcher
+├── executar.sh          # macOS/Linux launcher
+├── README.md            # Project documentation
 ├── .gitignore
-└── LICENSE              # Se existir no repositório
+└── LICENSE              # If present in the repository
 ```
 
 ---
 
-## 🧪 Tecnologias envolvidas
+## 🧪 Technologies used
 
 - Java
-- Programação orientada a objetos
-- Lógica de jogos
-- Redes neurais artificiais criadas do zero
-- Simulação de agentes e tomada de decisão
+- Object-oriented programming
+- Game logic
+- Neural networks built from scratch
+- Agent simulation and decision-making
 
 ---
 
-## 💡 Por que este projeto é interessante?
+## 💡 Why this project is interesting
 
-Porque ele junta duas áreas muito legais de estudo:
+Because it brings together two highly relevant areas of study:
 
-- desenvolvimento de jogos;
-- inteligência artificial aplicada de forma prática.
+- game development;
+- artificial intelligence applied in a practical environment.
 
-É uma ótima forma de aprender como uma IA pode tomar decisões em tempo real dentro de um ambiente simples, visual e interativo.
+It is an excellent way to understand how an AI can make real-time decisions in a simple, visual, and interactive setting.
 
 ---
 
-## 🚀 Conclusão
+## 🚀 Conclusion
 
-Se você gosta de Java, jogos, IA e experimentação prática, esse projeto é uma ótima maneira de explorar esses conceitos em um único lugar.
+If you enjoy Java, games, AI, and hands-on experimentation, this project is a strong example of how these concepts can be combined in one practical solution.
 
-Basta executar, acompanhar os dinossauros e ver a evolução do comportamento dos agentes ao longo da simulação.
+Simply run it, watch the dinosaurs, and observe how their behavior evolves as the simulation progresses.
